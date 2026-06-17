@@ -22,6 +22,19 @@
   gap:40px;
   align-items:center;
 }
+.custom-homepage-hero__wrapper{
+  display:flex;
+  align-items:center;
+  gap:40px;
+}
+.custom-homepage-hero__content,
+.custom-homepage-hero__image{
+  flex:1;
+}
+.custom-homepage-hero__image img{
+  width:100%;
+  display:block;
+}
 .custom-homepage-hero__content h1{
   margin-bottom:16px;
 }
@@ -38,12 +51,29 @@
   height:auto;
   display:block;
 }
+.layout-reverse{
+  flex-direction:row-reverse;
+}
+.text-left{
+  text-align:left;
+}
+.text-center{
+  text-align:center;
+}
+.text-right{
+  text-align:right;
+}
+ 
 @media screen and (max-width: 749px){
   .custom-homepage-hero__wrapper{
     grid-template-columns:1fr;
   }
   .custom-homepage-hero__buttons .button{
     width:100%;
+  } 
+  .custom-homepage-hero__wrapper,
+  .layout-reverse{
+    flex-direction:column;
   }
 } 
 
