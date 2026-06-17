@@ -1,5 +1,9 @@
-
-<section class="custom-homepage-footer">
+{% if section.settings.show_section %}
+<section class="custom-homepage-footer" style="
+  background-color: {{ section.settings.background_color }};
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+">
   <div class="page-width">
 
     <div class="custom-homepage-footer__grid">
@@ -108,6 +112,7 @@
 
   </div>
 </section>
+{% endif %}
 
 {% schema %}
 {
@@ -151,7 +156,48 @@
       "id": "copyright",
       "label": "Copyright Text",
       "default": "© 2026 Your Store. All rights reserved."
-    }
+    },
+    {
+  "type":"checkbox",
+  "id":"show_section",
+  "label":"Show Section",
+  "default":true
+},
+{
+  "type":"color",
+  "id":"background_color",
+  "label":"Background Color",
+  "default":"#ffffff"
+},
+{
+  "type":"select",
+  "id":"text_alignment",
+  "label":"Text Alignment",
+  "options":[
+    {"value":"left","label":"Left"},
+    {"value":"center","label":"Center"},
+    {"value":"right","label":"Right"}
+  ],
+  "default":"left"
+},
+{
+  "type":"range",
+  "id":"padding_top",
+  "min":0,
+  "max":120,
+  "step":4,
+  "default":60,
+  "label":"Padding Top"
+},
+{
+  "type":"range",
+  "id":"padding_bottom",
+  "min":0,
+  "max":120,
+  "step":4,
+  "default":60,
+  "label":"Padding Bottom"
+}
   ],
   "blocks": [
     {
