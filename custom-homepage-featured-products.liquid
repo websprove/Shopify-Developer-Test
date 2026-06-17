@@ -1,0 +1,228 @@
+
+<section class="custom-homepage-featured-products">
+  <div class="page-width">
+
+    <div class="section-header">
+      <h2>{{ section.settings.heading }}</h2>
+
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+
+    <div class="custom-homepage-featured-products__grid columns-{{ section.settings.products_per_row }}">
+
+      {% for block in section.blocks %}
+
+        {% assign product = block.settings.product %}
+
+        <div
+          class="custom-homepage-featured-products__card"
+          {{ block.shopify_attributes }}
+        >
+
+          {% if product != blank %}
+
+            <a href="{{ product.url }}" class="product-card__image">
+
+              {% if product.featured_image %}
+                {{
+                  product.featured_image
+                  | image_url: width: 600
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: product.featured_image.alt
+                }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+
+            </a>
+
+            <div class="product-card__content">
+
+              <h3>
+                <a href="{{ product.url }}">
+                  {{ product.title }}
+                </a>
+              </h3>
+
+              <div class="price">
+                {{ product.price | money }}
+              </div>
+
+              <a
+                href="{{ product.url }}"
+                class="button"
+              >
+                {{ block.settings.button_text }}
+              </a>
+
+            </div>
+
+          {% else %}
+
+            {% if block.settings.image != blank %}
+
+              {{
+                block.settings.image
+                | image_url: width: 600
+                | image_tag:
+                  loading: 'lazy',
+                  alt: block.settings.image_alt
+              }}
+
+            {% else %}
+
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+
+            {% endif %}
+
+            <div class="product-card__content">
+
+              <h3>
+                {{ block.settings.manual_title | default: 'Sample Product' }}
+              </h3>
+
+              <div class="price">
+                {{ block.settings.manual_price | default: '$99.00' }}
+              </div>
+
+              {% if block.settings.button_link != blank %}
+                <a
+                  href="{{ block.settings.button_link }}"
+                  class="button"
+                >
+                  {{ block.settings.button_text }}
+                </a>
+              {% endif %}
+
+            </div>
+
+          {% endif %}
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+    {% if section.settings.view_all_text != blank %}
+      <div class="featured-products-view-all">
+        <a
+          href="{{ section.settings.view_all_link }}"
+          class="button button--secondary"
+        >
+          {{ section.settings.view_all_text }}
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Products"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Explore our featured products."
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products Per Row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Button Text",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Manual Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Manual Image Alt Text"
+        },
+        {
+          "type": "text",
+          "id": "manual_title",
+          "label": "Manual Product Title",
+          "default": "Product Title"
+        },
+        {
+          "type": "text",
+          "id": "manual_price",
+          "label": "Manual Price",
+          "default": "$99.00"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Manual Button Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Custom Homepage Featured Products",
+      "blocks": [
+        {
+          "type": "product_card"
+        },
+        {
+          "type": "product_card"
+        },
+        {
+          "type": "product_card"
+        },
+        {
+          "type": "product_card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

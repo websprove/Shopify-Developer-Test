@@ -1,0 +1,207 @@
+
+<section class="custom-homepage-footer">
+  <div class="page-width">
+
+    <div class="custom-homepage-footer__grid">
+
+      <div class="footer-column footer-column--about">
+
+        {% if section.settings.footer_text != blank %}
+          <div class="footer-text">
+            {{ section.settings.footer_text }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.show_contact %}
+          <div class="footer-contact">
+
+            {% if section.settings.phone != blank %}
+              <p>
+                <strong>Phone:</strong>
+                {{ section.settings.phone }}
+              </p>
+            {% endif %}
+
+            {% if section.settings.email != blank %}
+              <p>
+                <strong>Email:</strong>
+                <a href="mailto:{{ section.settings.email }}">
+                  {{ section.settings.email }}
+                </a>
+              </p>
+            {% endif %}
+
+            {% if section.settings.address != blank %}
+              <p>
+                <strong>Address:</strong>
+                {{ section.settings.address }}
+              </p>
+            {% endif %}
+
+          </div>
+        {% endif %}
+
+      </div>
+
+      {% for block in section.blocks %}
+
+        {% case block.type %}
+
+          {% when 'menu_group' %}
+
+            <div
+              class="footer-column"
+              {{ block.shopify_attributes }}
+            >
+
+              {% if block.settings.heading != blank %}
+                <h3>{{ block.settings.heading }}</h3>
+              {% endif %}
+
+              {% if block.settings.menu != blank %}
+                <ul class="footer-menu">
+
+                  {% for link in block.settings.menu.links %}
+                    <li>
+                      <a href="{{ link.url }}">
+                        {{ link.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+
+                </ul>
+              {% endif %}
+
+            </div>
+
+          {% when 'social_link' %}
+
+            {% if forloop.first %}
+              <div class="footer-column footer-social-links">
+                <h3>Follow Us</h3>
+            {% endif %}
+
+                <a
+                  href="{{ block.settings.url }}"
+                  target="_blank"
+                  rel="noopener"
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.platform }}
+                </a><br>
+
+            {% if forloop.last %}
+              </div>
+            {% endif %}
+
+        {% endcase %}
+
+      {% endfor %}
+
+    </div>
+
+    {% if section.settings.show_copyright %}
+      <div class="footer-copyright">
+        {{ section.settings.copyright }}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "<p>Tell customers about your business.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact",
+      "label": "Show Contact Information",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_copyright",
+      "label": "Show Copyright",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright Text",
+      "default": "© 2026 Your Store. All rights reserved."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_group",
+      "name": "Menu Link Group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Menu Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "social_link",
+      "name": "Social Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "platform",
+          "label": "Platform",
+          "default": "Facebook"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Social URL"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Custom Homepage Footer",
+      "blocks": [
+        {
+          "type": "menu_group"
+        },
+        {
+          "type": "social_link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 

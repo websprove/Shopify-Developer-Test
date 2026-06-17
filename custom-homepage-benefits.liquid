@@ -1,0 +1,91 @@
+
+<section class="custom-homepage-benefits">
+  <div class="page-width">
+
+    <div class="custom-homepage-benefits__grid">
+
+      {% for block in section.blocks %}
+        <div
+          class="custom-homepage-benefits__item"
+          {{ block.shopify_attributes }}
+        >
+
+          {% if block.settings.icon != blank %}
+            {{
+              block.settings.icon
+              | image_url: width: 120
+              | image_tag:
+                loading: 'lazy',
+                alt: block.settings.icon_alt
+            }}
+          {% endif %}
+
+          {% if block.settings.title != blank %}
+            <h3>{{ block.settings.title }}</h3>
+          {% endif %}
+
+          {% if block.settings.text != blank %}
+            <p>{{ block.settings.text }}</p>
+          {% endif %}
+
+        </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Homepage Benefits",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "icon_alt",
+          "label": "Icon Alt Text",
+          "default": "Benefit icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Benefit Title",
+          "default": "Fast Shipping"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Short Text",
+          "default": "Quick delivery to your doorstep."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Homepage Benefits",
+      "blocks": [
+        {
+          "type": "benefit"
+        },
+        {
+          "type": "benefit"
+        },
+        {
+          "type": "benefit"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

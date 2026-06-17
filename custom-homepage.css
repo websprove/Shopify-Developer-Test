@@ -1,0 +1,282 @@
+/******** Homepage CSS *****/
+.custom-homepage-hero{
+  padding: 60px 0;
+}
+.custom-homepage-hero__wrapper{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+.custom-homepage-hero__content h1{
+  margin-bottom:16px;
+}
+.custom-homepage-hero__content p{
+  margin-bottom:24px;
+}
+.custom-homepage-hero__buttons{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.custom-homepage-hero__image img{
+  width:100%;
+  display:block;
+}
+@media screen and (max-width: 749px){
+  .custom-homepage-hero__wrapper{
+    grid-template-columns:1fr;
+  }
+  .custom-homepage-hero__buttons .button{
+    width:100%;
+  }
+} 
+
+/******** Benefits ********/
+.custom-homepage-benefits{
+  padding:40px 0;
+}
+
+.custom-homepage-benefits__grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px;
+}
+.custom-homepage-benefits__item{
+  text-align:center;
+}
+.custom-homepage-benefits__item img{
+  max-width:50px;
+  display:block;
+  margin:0 auto 16px;
+}
+.custom-homepage-benefits__item h3{
+  margin:0 0 8px;
+}
+.custom-homepage-benefits__item p{
+  margin:0;
+}
+@media screen and (max-width: 749px){
+  .custom-homepage-benefits__grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+  }
+}
+
+/********** Featured Products *********/
+.custom-homepage-featured-products{
+  padding:60px 0;
+}
+.section-header{
+  text-align:center;
+  margin-bottom:40px;
+}
+.custom-homepage-featured-products__grid{
+  display:grid;
+  gap:24px;
+}
+.custom-homepage-featured-products__grid.columns-2{
+  grid-template-columns:repeat(2,1fr);
+}
+.custom-homepage-featured-products__grid.columns-3{
+  grid-template-columns:repeat(3,1fr);
+}
+.custom-homepage-featured-products__grid.columns-4{
+  grid-template-columns:repeat(4,1fr);
+}
+.custom-homepage-featured-products__card{
+  border:1px solid rgba(0,0,0,.1);
+}
+.custom-homepage-featured-products__card img,
+.placeholder-svg{
+  width:100%;
+  display:block;
+}
+.placeholder-svg{
+  background:#f5f5f5;
+  min-height:300px;
+}
+.product-card__content{
+  padding:20px;
+}
+.product-card__content h3{
+  margin:0 0 12px;
+}
+.price{
+  margin-bottom:16px;
+  font-weight:600;
+}
+.featured-products-view-all{
+  margin-top:40px;
+  text-align:center;
+}
+
+@media screen and (max-width:989px){
+  .custom-homepage-featured-products__grid{
+    grid-template-columns:repeat(2,1fr) !important;
+  }
+}
+@media screen and (max-width:749px){
+  .custom-homepage-featured-products__grid{
+    grid-template-columns:1fr !important;
+  }
+}
+
+/****** Custom Collection *******/
+ 
+.custom-homepage-collections{
+  padding:60px 0;
+}
+.custom-homepage-collections__arrows{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-bottom:20px;
+}
+.collections-prev,
+.collections-next{
+  width:40px;
+  height:40px;
+  cursor:pointer;
+}
+.custom-homepage-collections__slider-wrapper{
+  overflow:hidden;
+}
+.custom-homepage-collections__grid{
+  display:flex;
+  gap:24px;
+  transition:transform .3s ease;
+}
+.custom-homepage-collections__card{
+  flex:0 0 calc((100% - 48px) / 3);
+  border:1px solid rgba(0,0,0,.1);
+}
+.custom-homepage-collections__card img,
+.placeholder-svg{
+  width:100%;
+  display:block;
+}
+.placeholder-svg{
+  background:#f5f5f5;
+  min-height:300px;
+}
+.collection-card__content{
+  padding:20px;
+}
+.collection-card__content h3{
+  margin:0 0 12px;
+}
+.collection-card__content p{
+  margin-bottom:16px;
+}
+@media screen and (max-width:989px){
+  .custom-homepage-collections__card{
+    flex:0 0 calc((100% - 24px) / 2);
+  }
+}
+@media screen and (max-width:749px){
+  .custom-homepage-collections__card{
+    flex:0 0 100%;
+  }
+} 
+
+/****** Custom Homepage Reviews ******/
+.custom-homepage-reviews{
+  padding:60px 0;
+}
+.custom-homepage-reviews__grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.custom-homepage-review-card{
+  border:1px solid rgba(0,0,0,.1);
+  padding:24px;
+  text-align:center;
+}
+.review-card__image img{
+  width:80px;
+  height:80px;
+  object-fit:cover;
+  border-radius:50%;
+  margin:0 auto 16px;
+  display:block;
+}
+.review-card__stars{
+  margin-bottom:16px;
+  font-size:20px;
+}
+.review-card__text{
+  margin-bottom:20px;
+  font-style:italic;
+}
+.review-card__name{
+  margin:0 0 12px;
+}
+.review-card__product{
+  margin-bottom:16px;
+}
+.review-card__product small{
+  display:block;
+  margin-bottom:4px;
+}
+
+@media screen and (max-width:989px){
+  .custom-homepage-reviews__grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media screen and (max-width:749px){
+  .custom-homepage-reviews__grid{
+    grid-template-columns:1fr;
+  }
+} 
+
+/******* Custom Homepage Footer Area ********/
+.custom-homepage-footer{
+  padding:60px 0;
+  border-top:1px solid rgba(0,0,0,.1);
+}
+.custom-homepage-footer__grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:32px;
+}
+.footer-column h3{
+  margin:0 0 16px;
+}
+.footer-menu{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.footer-menu li{
+  margin-bottom:10px;
+}
+.footer-menu a,
+.footer-social-links a{
+  text-decoration:none;
+}
+.footer-contact p{
+  margin:0 0 10px;
+}
+.footer-copyright{
+  margin-top:40px;
+  padding-top:20px;
+  border-top:1px solid rgba(0,0,0,.1);
+  text-align:center;
+}
+.section-sections--28646590316884__footer-padding {
+  display: none;
+}
+@media screen and (max-width:989px){
+  .custom-homepage-footer__grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+@media screen and (max-width:749px){
+  .custom-homepage-footer__grid{
+    grid-template-columns:1fr;
+  }
+}

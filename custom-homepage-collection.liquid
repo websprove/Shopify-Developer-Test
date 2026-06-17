@@ -1,0 +1,337 @@
+ 
+<section
+  class="custom-homepage-collections"
+  data-cards-per-row="{{ section.settings.cards_per_row }}"
+>
+  <div class="page-width">
+
+    <div class="section-header">
+      <h2>{{ section.settings.heading }}</h2>
+
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+
+    {% if section.settings.enable_slider and section.settings.show_arrows %}
+      <div class="custom-homepage-collections__arrows">
+        <button
+          type="button"
+          class="collections-prev"
+          aria-label="Previous"
+        >
+          ←
+        </button>
+
+        <button
+          type="button"
+          class="collections-next"
+          aria-label="Next"
+        >
+          →
+        </button>
+      </div>
+    {% endif %}
+
+    <div class="custom-homepage-collections__slider-wrapper">
+
+      <div class="custom-homepage-collections__grid">
+
+        {% for block in section.blocks %}
+
+          {% assign collection = block.settings.collection %}
+
+          <div
+            class="custom-homepage-collections__card"
+            {{ block.shopify_attributes }}
+          >
+
+            {% if collection != blank %}
+
+              <a href="{{ collection.url }}" class="collection-card__image">
+
+                {% if collection.featured_image %}
+
+                  {{
+                    collection.featured_image
+                    | image_url: width: 700
+                    | image_tag:
+                      loading: 'lazy',
+                      alt: collection.title
+                  }}
+
+                {% elsif collection.products.first.featured_image %}
+
+                  {{
+                    collection.products.first.featured_image
+                    | image_url: width: 700
+                    | image_tag:
+                      loading: 'lazy',
+                      alt: collection.title
+                  }}
+
+                {% else %}
+
+                  {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+
+                {% endif %}
+
+              </a>
+
+              <div class="collection-card__content">
+
+                <h3>
+                  <a href="{{ collection.url }}">
+                    {{ collection.title }}
+                  </a>
+                </h3>
+
+                {% if collection.description != blank %}
+                  <p>
+                    {{ collection.description | strip_html | truncate: 100 }}
+                  </p>
+                {% endif %}
+
+                {% if section.settings.show_cta %}
+                  <a
+                    href="{{ collection.url }}"
+                    class="button"
+                  >
+                    {{ section.settings.cta_text }}
+                  </a>
+                {% endif %}
+
+              </div>
+
+            {% else %}
+
+              {% if block.settings.image != blank %}
+
+                {{
+                  block.settings.image
+                  | image_url: width: 700
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: block.settings.image_alt
+                }}
+
+              {% else %}
+
+                {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+
+              {% endif %}
+
+              <div class="collection-card__content">
+
+                <h3>
+                  {{ block.settings.manual_title | default: 'Collection Title' }}
+                </h3>
+
+                <p>
+                  {{ block.settings.manual_description | default: 'Collection description goes here.' }}
+                </p>
+
+                {% if section.settings.show_cta and block.settings.button_link != blank %}
+                  <a
+                    href="{{ block.settings.button_link }}"
+                    class="button"
+                  >
+                    {{ block.settings.button_text }}
+                  </a>
+                {% endif %}
+
+              </div>
+
+            {% endif %}
+
+          </div>
+
+        {% endfor %}
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% if section.settings.enable_slider %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const section = document.getElementById('shopify-section-{{ section.id }}');
+
+  if (!section) return;
+
+  const grid = section.querySelector('.custom-homepage-collections__grid');
+  const cards = section.querySelectorAll('.custom-homepage-collections__card');
+  const prev = section.querySelector('.collections-prev');
+  const next = section.querySelector('.collections-next');
+
+  if (!grid || !prev || !next || cards.length === 0) return;
+
+  let currentIndex = 0;
+
+  function getVisibleCards() {
+
+    if (window.innerWidth < 750) return 1;
+
+    if (window.innerWidth < 990) return 2;
+
+    return parseInt(section.dataset.cardsPerRow) || 3;
+  }
+
+  function updateSlider() {
+
+    const visible = getVisibleCards();
+
+    const gap = 24;
+
+    const cardWidth = cards[0].offsetWidth + gap;
+
+    const maxIndex = Math.max(cards.length - visible, 0);
+
+    currentIndex = Math.min(currentIndex, maxIndex);
+
+    currentIndex = Math.max(currentIndex, 0);
+
+    grid.style.transform =
+      'translateX(-' + (currentIndex * cardWidth) + 'px)';
+
+    prev.disabled = currentIndex === 0;
+    next.disabled = currentIndex >= maxIndex;
+  }
+
+  next.addEventListener('click', function () {
+    currentIndex++;
+    updateSlider();
+  });
+
+  prev.addEventListener('click', function () {
+    currentIndex--;
+    updateSlider();
+  });
+
+  window.addEventListener('resize', updateSlider);
+
+  updateSlider();
+
+});
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Title",
+      "default": "Shop by Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subtitle",
+      "default": "Browse our collections."
+    },
+    {
+      "type": "range",
+      "id": "cards_per_row",
+      "label": "Cards Per Row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show CTA Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Shop Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider",
+      "label": "Enable Slider",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Arrows",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Manual Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Manual Image Alt Text"
+        },
+        {
+          "type": "text",
+          "id": "manual_title",
+          "label": "Manual Collection Title",
+          "default": "Collection Title"
+        },
+        {
+          "type": "textarea",
+          "id": "manual_description",
+          "label": "Manual Description",
+          "default": "Collection description."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Manual Button Text",
+          "default": "Explore"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Manual Button Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Custom Homepage Collections",
+      "blocks": [
+        {
+          "type": "collection_card"
+        },
+        {
+          "type": "collection_card"
+        },
+        {
+          "type": "collection_card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 
