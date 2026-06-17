@@ -4,7 +4,16 @@
   padding-top: {{ section.settings.padding_top }}px;
   padding-bottom: {{ section.settings.padding_bottom }}px;
 ">
-  <div class="page-width">
+<div class="
+  {% case section.settings.page_width %}
+    {% when 'full' %}
+      custom-page-width-full
+    {% when 'narrow' %}
+      custom-page-width-narrow
+    {% else %}
+      page-width
+  {% endcase %}
+">
 
     <div class="section-header">
       <h2>{{ section.settings.heading }}</h2>
@@ -154,6 +163,26 @@
   "step":4,
   "default":60,
   "label":"Padding Bottom"
+},
+{
+  "type": "select",
+  "id": "page_width",
+  "label": "Page Width",
+  "options": [
+    {
+      "value": "standard",
+      "label": "Standard"
+    },
+    {
+      "value": "narrow",
+      "label": "Narrow"
+    },
+    {
+      "value": "full",
+      "label": "Full Width"
+    }
+  ],
+  "default": "standard"
 }
   ],
   "blocks": [
