@@ -1,63 +1,144 @@
-{% if section.settings.show_section %}
-<section class="custom-homepage-benefits" style="
-  background-color: {{ section.settings.background_color }};
-  padding-top: {{ section.settings.padding_top }}px;
-  padding-bottom: {{ section.settings.padding_bottom }}px;">
-  <div class="
-    {% case section.settings.page_width %}
-      {% when 'full' %}
-        custom-page-width-full
-      {% when 'narrow' %}
-        custom-page-width-narrow
-      {% else %}
-        page-width
-    {% endcase %}
-  ">
 
-    <div class="custom-homepage-benefits__grid">
+{% if section.settings.show_section %} 
+  <section
+    class="custom-homepage-benefits"
+    style="
+      background-color: {{ section.settings.background_color }};
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    "
+  >
+    <div class="
+      {% case section.settings.page_width %}
+        {% when 'full' %}
+          custom-page-width-full
+        {% when 'narrow' %}
+          custom-page-width-narrow
+        {% else %}
+          page-width
+      {% endcase %}
+    ">
 
-      {% for block in section.blocks %}
-        <div
-          class="custom-homepage-benefits__item"
-          {{ block.shopify_attributes }}
-        >
+      <div class="custom-homepage-benefits__grid">
 
-      {% if block.settings.icon != blank %}
+        {% for block in section.blocks %}
 
-        {{
-          block.settings.icon
-          | image_url: width: 120
-          | image_tag:
-            loading: 'lazy',
-            alt: block.settings.icon_alt
-        }}
+          <div
+            class="custom-homepage-benefits__item"
+            style="text-align: {{ section.settings.text_alignment }};"
+            {{ block.shopify_attributes }}
+          >
 
-      {% else %}
+            {% if block.settings.icon != blank %}
 
-        {{ 'image' | placeholder_svg_tag: 'benefit-placeholder' }}
+              {{
+                block.settings.icon
+                | image_url: width: 120
+                | image_tag:
+                  loading: 'lazy',
+                  alt: block.settings.icon_alt
+              }}
 
-      {% endif %}
+            {% else %}
 
-          {% if block.settings.title != blank %}
-            <h3>{{ block.settings.title }}</h3>
-          {% endif %}
+              {{ 'image' | placeholder_svg_tag: 'benefit-placeholder' }}
 
-          {% if block.settings.text != blank %}
-            <p>{{ block.settings.text }}</p>
-          {% endif %}
+            {% endif %}
 
-        </div>
-      {% endfor %}
+            {% if block.settings.title != blank %}
+              <h3>{{ block.settings.title }}</h3>
+            {% endif %}
+
+            {% if block.settings.text != blank %}
+              <p>{{ block.settings.text }}</p>
+            {% endif %}
+
+          </div>
+
+        {% endfor %}
+
+      </div>
 
     </div>
 
-  </div>
-</section>
+  </section>
 {% endif %}
+
 {% schema %}
 {
   "name": "Custom Homepage Benefits",
-  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show Section",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 60
+    },
+    {
+      "type": "select",
+      "id": "page_width",
+      "label": "Page Width",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        },
+        {
+          "value": "full",
+          "label": "Full Width"
+        }
+      ],
+      "default": "standard"
+    }
+  ],
   "blocks": [
     {
       "type": "benefit",
@@ -66,7 +147,7 @@
         {
           "type": "image_picker",
           "id": "icon",
-          "label": "Icon"
+          "label": "Icon / Image"
         },
         {
           "type": "text",
@@ -85,71 +166,11 @@
           "id": "text",
           "label": "Short Text",
           "default": "Quick delivery to your doorstep."
-        },
-        {
-  "type":"checkbox",
-  "id":"show_section",
-  "label":"Show Section",
-  "default":true
-},
-{
-  "type":"color",
-  "id":"background_color",
-  "label":"Background Color",
-  "default":"#ffffff"
-},
-{
-  "type":"select",
-  "id":"text_alignment",
-  "label":"Text Alignment",
-  "options":[
-    {"value":"left","label":"Left"},
-    {"value":"center","label":"Center"},
-    {"value":"right","label":"Right"}
-  ],
-  "default":"left"
-},
-{
-  "type":"range",
-  "id":"padding_top",
-  "min":0,
-  "max":120,
-  "step":4,
-  "default":60,
-  "label":"Padding Top"
-},
-{
-  "type":"range",
-  "id":"padding_bottom",
-  "min":0,
-  "max":120,
-  "step":4,
-  "default":60,
-  "label":"Padding Bottom"
-},
-{
-  "type": "select",
-  "id": "page_width",
-  "label": "Page Width",
-  "options": [
-    {
-      "value": "standard",
-      "label": "Standard"
-    },
-    {
-      "value": "narrow",
-      "label": "Narrow"
-    },
-    {
-      "value": "full",
-      "label": "Full Width"
-    }
-  ],
-  "default": "standard"
-}
+        }
       ]
     }
   ],
+  "max_blocks": 4,
   "presets": [
     {
       "name": "Custom Homepage Benefits",
@@ -167,4 +188,4 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %} 
